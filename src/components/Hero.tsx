@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import heroBackground from "@/assets/hero-background.jpg";
 
 interface HeroProps {
   searchQuery: string;
@@ -8,8 +9,12 @@ interface HeroProps {
 
 const Hero = ({ searchQuery, onSearchChange }: HeroProps) => {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-primary via-secondary to-accent py-20 px-4">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTEydi0xMmgxMnYxMnptMCAxMmgtMTJ2MTJoMTJ2LTEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
+    <div className="relative overflow-hidden py-20 px-4">
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+        style={{ backgroundImage: `url(${heroBackground})` }}
+      ></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-secondary/70 to-accent/80"></div>
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-4">
           Student Project Ideas Hub
