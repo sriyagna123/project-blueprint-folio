@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectModal from "@/components/ProjectModal";
 import CategoryFilter from "@/components/CategoryFilter";
-import { Loader2 } from "lucide-react";
+import { Loader2, LogOut } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import type { Session } from "@supabase/supabase-js";
 
 interface Project {
   id: string;
@@ -27,6 +31,25 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
@@ -68,12 +91,47 @@ const Index = () => {
   const filteredMajorProjects = filterProjects(majorProjects);
 
   const handleProjectClick = (project: Project) => {
+    if (!session) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to view project details.",
+      });
+      navigate("/auth");
+      return;
+    }
     setSelectedProject(project);
     setModalOpen(true);
   };
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Signed out",
+      description: "You have been signed out successfully.",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <div className="absolute top-4 right-4 z-10">
+        {session ? (
+          <Button
+            onClick={handleSignOut}
+            variant="outline"
+            className="gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign Out
+          </Button>
+        ) : (
+          <Button
+            onClick={() => navigate("/auth")}
+            variant="default"
+          >
+            Sign In
+          </Button>
+        )}
+      </div>
       <Hero searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
       <div className="max-w-7xl mx-auto px-4 py-12">
