@@ -32,6 +32,7 @@ const Index = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -40,12 +41,14 @@ const Index = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setSession(session);
+        setUser(session?.user ?? null);
       }
     );
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      setUser(session?.user ?? null);
     });
 
     return () => subscription.unsubscribe();
@@ -98,11 +101,12 @@ const Index = () => {
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (!error) {
+      setSession(null);
+      setUser(null);
       toast({
         title: "Signed out",
         description: "You have been signed out successfully.",
       });
-      setSession(null);
     } else {
       toast({
         title: "Error",
