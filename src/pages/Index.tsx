@@ -96,11 +96,20 @@ const Index = () => {
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    toast({
-      title: "Signed out",
-      description: "You have been signed out successfully.",
-    });
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully.",
+      });
+      setSession(null);
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to sign out. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (!session) {
