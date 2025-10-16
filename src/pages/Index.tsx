@@ -8,7 +8,7 @@ import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectModal from "@/components/ProjectModal";
 import CategoryFilter from "@/components/CategoryFilter";
-import { Loader2, LogOut } from "lucide-react";
+import { Loader2, LogOut, Code2, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { Session } from "@supabase/supabase-js";
 
@@ -91,14 +91,6 @@ const Index = () => {
   const filteredMajorProjects = filterProjects(majorProjects);
 
   const handleProjectClick = (project: Project) => {
-    if (!session) {
-      toast({
-        title: "Authentication required",
-        description: "Please sign in to view project details.",
-      });
-      navigate("/auth");
-      return;
-    }
     setSelectedProject(project);
     setModalOpen(true);
   };
@@ -111,30 +103,70 @@ const Index = () => {
     });
   };
 
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="absolute top-4 right-4 z-10">
-        {session ? (
-          <Button
-            onClick={handleSignOut}
-            variant="outline"
-            className="gap-2"
-          >
-            <LogOut className="h-4 w-4" />
-            Sign Out
-          </Button>
-        ) : (
-          <Button
-            onClick={() => navigate("/auth")}
-            variant="default"
-          >
-            Sign In
-          </Button>
-        )}
+  if (!session) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/30 via-secondary/20 to-accent/30 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/3 left-1/3 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-pulse delay-500" />
+        </div>
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <div className="w-full max-w-md relative">
+            <div className="bg-card/90 backdrop-blur-xl border-2 border-primary/30 rounded-3xl shadow-2xl p-8 space-y-6">
+              <div className="text-center space-y-4">
+                <div className="flex justify-center mb-6">
+                  <div className="relative">
+                    <Code2 className="h-16 w-16 text-primary animate-pulse" />
+                    <Sparkles className="h-6 w-6 text-secondary absolute -top-2 -right-2 animate-bounce" />
+                  </div>
+                </div>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                  Student Project Ideas Hub
+                </h1>
+                <p className="text-lg text-muted-foreground">
+                  Discover amazing project ideas across multiple categories
+                </p>
+                <p className="text-sm text-muted-foreground/80">
+                  Sign in to explore detailed project ideas for mini and major projects
+                </p>
+              </div>
+              <Button
+                onClick={() => navigate("/auth")}
+                className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity text-lg py-6"
+              >
+                Sign In to Explore Projects
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
-      <Hero searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+    );
+  }
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-primary/20 via-background to-secondary/20 relative overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10" />
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 left-1/3 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse delay-500" />
+      </div>
+      <div className="absolute top-4 right-4 z-10">
+        <Button
+          onClick={handleSignOut}
+          variant="outline"
+          className="gap-2"
+        >
+          <LogOut className="h-4 w-4" />
+          Sign Out
+        </Button>
+      </div>
+      <div className="relative z-10">
+        <Hero searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <div className="mb-8">
           <CategoryFilter
             categories={categories}

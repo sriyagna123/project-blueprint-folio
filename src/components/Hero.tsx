@@ -10,16 +10,12 @@ interface HeroProps {
 const Hero = ({ searchQuery, onSearchChange }: HeroProps) => {
   return (
     <div className="relative overflow-hidden py-20 px-4">
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-        style={{ backgroundImage: `url(${heroBackground})` }}
-      ></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-secondary/70 to-accent/80"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/50 via-secondary/40 to-accent/50"></div>
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-4">
+        <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-4">
           Student Project Ideas Hub
         </h1>
-        <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8">
+        <p className="text-xl md:text-2xl text-foreground/80 mb-8">
           Discover detailed project ideas for mini and major projects
         </p>
         <div className="relative max-w-2xl mx-auto">

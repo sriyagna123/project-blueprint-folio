@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Code2, Sparkles } from "lucide-react";
+import { Code2, Sparkles, ArrowLeft } from "lucide-react";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -75,6 +75,15 @@ const Auth = () => {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
+      
+      <Button
+        onClick={() => navigate("/")}
+        variant="outline"
+        className="absolute top-4 left-4 z-10 gap-2"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back
+      </Button>
       
       <div className="w-full max-w-md relative">
         <div className="bg-card/80 backdrop-blur-xl border-2 border-primary/20 rounded-2xl shadow-2xl p-8 space-y-6">
