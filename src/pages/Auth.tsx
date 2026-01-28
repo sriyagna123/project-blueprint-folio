@@ -6,25 +6,35 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Code2, Sparkles, ArrowLeft } from "lucide-react";
+import type { Session } from "@supabase/supabase-js";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is already logged in
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate("/");
-      }
-    };
-    checkUser();
+    // Listen first, then read current session (prevents missing auth events)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession);
+    });
+
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      setSession(currentSession);
+    });
+
+    return () => subscription.unsubscribe();
   }, [navigate]);
+
+  useEffect(() => {
+    if (session) navigate("/");
+  }, [session, navigate]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +54,7 @@ const Auth = () => {
         navigate("/");
       } else {
         const redirectUrl = `${window.location.origin}/`;
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -52,16 +62,39 @@ const Auth = () => {
           },
         });
         if (error) throw error;
-        toast({
-          title: "Account created!",
-          description: "Successfully signed up. You can now sign in.",
-        });
-        setIsLogin(true);
+
+        // With auto-confirm enabled, this typically creates a session immediately.
+        if (data.session) {
+          toast({
+            title: "Account created!",
+            description: "You're signed in and ready to go.",
+          });
+          navigate("/");
+        } else {
+          toast({
+            title: "Account created!",
+            description:
+              "Please check your email to confirm your account, then come back and sign in.",
+          });
+          setIsLogin(true);
+        }
       }
     } catch (error: any) {
+      const msg = String(error?.message ?? "Something went wrong");
+
+      if (msg.toLowerCase().includes("already registered") || msg.toLowerCase().includes("already exists")) {
+        toast({
+          title: "Account already exists",
+          description: "Try signing in with this email instead.",
+          variant: "destructive",
+        });
+        setIsLogin(true);
+        return;
+      }
+
       toast({
         title: "Error",
-        description: error.message,
+        description: msg,
         variant: "destructive",
       });
     } finally {
