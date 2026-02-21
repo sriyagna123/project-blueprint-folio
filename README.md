@@ -1,73 +1,106 @@
-# Welcome to your Lovable project
+# 🚀 Project Hub
 
-## Project info
+## 🌐 Live Demo
 
-**URL**: https://lovable.dev/projects/91d319f9-ae44-4073-b83b-cc0849154a84
+👉 https://project-hub12.netlify.app/
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 📌 Project Overview
 
-**Use Lovable**
+Project Hub is a modern web application built using a powerful frontend stack. It provides a clean UI, smooth user experience, and scalable architecture for building interactive web applications.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/91d319f9-ae44-4073-b83b-cc0849154a84) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Tech Stack
 
-**Use your preferred IDE**
+* ⚡ Vite
+* ⚛️ React
+* 🟦 TypeScript
+* 🎨 Tailwind CSS
+* 🧩 shadcn/ui
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📂 Getting Started (Run Locally)
 
-Follow these steps:
+Follow these steps to run the project on your system:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# 1. Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# 2. Navigate to the project folder
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3. Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## ✏️ Editing the Project
 
-**Use GitHub Codespaces**
+### Option 1: Local Development
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Use your preferred IDE (VS Code recommended).
 
-## What technologies are used for this project?
+### Option 2: GitHub
 
-This project is built with:
+* Open files
+* Click ✏️ Edit
+* Commit changes
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Option 3: Codespaces
 
-## How can I deploy this project?
+* Click "Code" → Codespaces → New Codespace
+* Edit directly in browser
 
-Simply open [Lovable](https://lovable.dev/projects/91d319f9-ae44-4073-b83b-cc0849154a84) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## 🚀 Deployment
 
-Yes, you can!
+This project is deployed using **Netlify**.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+To redeploy:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+* Push changes to your repository
+* Netlify will automatically rebuild and deploy
+
+---
+
+## 🌍 Custom Domain
+
+You can connect your own domain via project settings (if using hosting platforms like Lovable or Netlify).
+
+---
+
+## 📸 Features
+
+* Modern UI/UX
+* Fast performance
+* Responsive design
+* Scalable structure
+
+---
+
+## 🤝 Contributing
+
+Feel free to fork this repository and submit pull requests.
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+Developed by *Sriyagna Ganesh*
+
+---
